@@ -4,11 +4,17 @@ BrianOS is an open source operating system I am creating to learn the fundamenta
 
 Usage
 -----
-In order to run an example sector, it will need to be moved from /example_sectors to the parent directory and renamed "boot_sector.asm".
-After that, to compile the boot sector, run "recompile_drive.bat".  To run the boot sector in a virtual machine (and to forego any build output), run "recompile_run_drive.bat".  Both of these scripts assume three things:
+Three scripts are provided for compiling and running boot sectors:
+ - recompile_drive.bat: recompile the drive and output build information
+ - recompile_run_drive.bat: recompile and run the drive without outputting build information
+ - run_drive.bat: run the virtual machine with whichever drive is currently set.  Doesn't take a command-line parameter
+
+Three things are assumed for these scripts to correctly execute:
  - NASM and VirtualBox are installed
  - The paths to both executables are included in the PATH anvironment variable
  - There is a virtual machine named "BrianOS" created in VirtualBox.  This VM should have an operating system of "Other/Unknown"
+
+Unless it explicitly says so above, the scripts take a command-line parameter consisting of the file location (relative to the CWD or absolute) of a boot sector assembly file. You can either drag an assembly file into them or you can call the scripts with a parameter from command prompt.
 
 References
 ----------
