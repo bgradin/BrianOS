@@ -1,7 +1,8 @@
 @echo off
 if "%1"=="" goto no_argument
 if exist boot_drive.vdi del /F boot_drive.vdi
-cd ..
+if not exist bin\NUL mkdir bin >nul 2>&1
+cd bin
 nasm %1 -f bin -o boot_sector.bin
 vboxmanage convertdd boot_sector.bin boot_drive.vdi --format VDI
 vboxmanage storageattach BrianOS --storagectl IDE --port 0 --device 0 --medium none
