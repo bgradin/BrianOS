@@ -1,12 +1,14 @@
 @echo off
 if "%1"=="" goto no_argument
 
+set scriptPath=%~dp0
+set outputPath=%scriptPath%bin
+if not exist %outputPath%\NUL mkdir %outputPath%
+
 cd %~dp1
-if not exist bin\NUL mkdir bin
+nasm %~nx1 -f bin -o %outputPath%\boot_sector.bin
 
-nasm %~nx1 -f bin -o bin\boot_sector.bin
-
-cd bin
+cd %outputPath%
 if exist boot_drive.vdi del /F boot_drive.vdi
 vboxmanage convertdd boot_sector.bin boot_drive.vdi --format VDI
 vboxmanage storageattach BrianOS --storagectl IDE --port 0 --device 0 --medium none
