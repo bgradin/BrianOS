@@ -14,7 +14,7 @@ vboxmanage convertdd boot_sector.bin boot_drive.vdi --format VDI >nul 2>&1
 vboxmanage storageattach BrianOS --storagectl IDE --port 0 --device 0 --medium none >nul 2>&1
 vboxmanage closemedium disk boot_drive.vdi >nul 2>&1
 vboxmanage storageattach BrianOS --storagectl IDE --port 0 --device 0 --medium boot_drive.vdi --type hdd >nul 2>&1
-virtualbox --startvm BrianOS --debug >nul 2>&1
+virtualbox --startvm BrianOS --debug-command-line >nul 2>&1
 exit
 
 no_argument:
