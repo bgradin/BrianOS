@@ -24,7 +24,8 @@ jmp $			; Jump to the current address (infinite loop)
 hello: db 'Hello',0
 goodbye: db 'Goodbye',0
 
-%include "includes\io.asm"
+%include "includes/string.asm"
+%include "includes/io.asm"
 
 ; Padding and magic number
 times 510-($-$$) db 0
