@@ -23,3 +23,5 @@ http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 http://askubuntu.com/questions/34802/convert-my-physical-operating-system-to-a-virtualbox-disk
 http://gerardnico.com/wiki/virtualbox/hard_disk_inaccessible
 https://www.virtualbox.org/manual/ch08.html
+http://www.virtualbox.org/manual/ch12.html#ts_debugger
+http://fisnikhasani.com/building-your-own-bootloader/
