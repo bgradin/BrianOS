@@ -2,6 +2,15 @@
 ; Requires:
 ;   string.asm
 
+section .data
+
+hex_value: resb 11
+hex_table: db '0123456789ABCDEF'
+
+section .text
+
+[bits 16]		; 16 bit subroutines
+
 ; PrintString
 ;   Prints a string
 ;   Inputs:
@@ -75,5 +84,48 @@ call PrintString
 pop eax
 ret
 
-hex_value: resb 11
-hex_table: db '0123456789ABCDEF'
+[bits 32]		; 32 bit subroutines
+
+; PrintString32
+;   32 bit subroutine to print a string
+;   Inputs:
+;     eax: Address of string
+;     bl: Color attribute
+;     dh: Row
+;     dl: Column
+PrintString32:
+pusha
+push eax
+
+; Calculate offset of video memory for screen location
+; location = 0xb8000 + 2 * (80 * row + column)
+sub eax, eax
+mov al, dh		; Store row in eax
+mov ecx, 80
+mul ecx			; eax = ecx * 80
+and edx, 0x000000FF	; Clear edx except for the lowest order byte
+add eax, edx		; eax = 80 * row + column
+shl eax, 1		; eax = 2 * (80 * row + column)
+add eax, 0xb8000
+
+mov ch, bl		; Store color attribute in ch
+mov edx, eax		; Store video memory location in edx
+pop eax			; Restore address of string
+sub ebx, ebx		; Clear ebx for use as counter
+
+PrintString32_loop:
+mov cl, [eax+ebx]	; Store char at string + offset into cl
+
+cmp cl, 0		; if (cl == 0), at end of string, sp
+je PrintString32_done	; jump to done state
+
+mov [edx], cx		; Store char and attributes at current
+			; character cell
+
+inc ebx			; Increment counters
+add edx, 2
+jmp PrintString32_loop	; Keep printing
+
+PrintString32_done:
+popa
+ret
